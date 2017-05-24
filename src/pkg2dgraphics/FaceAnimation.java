@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -27,10 +28,10 @@ public class FaceAnimation extends JComponent {
 
 
     // GAME VARIABLES WOULD GO HERE
-    Color teal = new Color(82, 196, 235);
     Color lightOrange = new Color(235, 151, 82);
     Color faintRed = new Color(240, 125, 125);
     Color brightRed = new Color(232, 44, 44);
+    Color faintYellow = new Color (248, 252, 116);
     // GAME VARIABLES END HERE   
 
     // drawing of the game happens in here
@@ -38,6 +39,7 @@ public class FaceAnimation extends JComponent {
     // NOTE: This is already double buffered!(helps with framerate/speed)
     @Override
     public void paintComponent(Graphics g) {
+        Graphics2D g2d = (Graphics2D)g;
         // always clear the screen first!
         g.clearRect(0, 0, WIDTH, HEIGHT);
         
@@ -51,11 +53,37 @@ public class FaceAnimation extends JComponent {
         //set circle color
         g.setColor(brightRed);
         // draw circle at(225, 180) near bottome centre that is 350 wide and 350 tall
-        g.fillOval(351, 100, 100, 200);
+
+        g.fillOval(351, 90, 100, 200);
         
-        g.drawArc(100, 145, 351, 100, 25, 96);
+        g2d.translate(400, 140);
+       
+        g2d.rotate(Math.toRadians(-35));
+        g.fillOval(0, 4, 100, 70);
+        g.fillArc(-5, -57, 110, 100, 30, 120);
+        g.fillRect(30, -33, 50, 40); 
         
+        g2d.rotate(Math.toRadians(35));
+        g2d.translate(0, -50);
         
+        g2d.rotate(Math.toRadians(-35));
+        g.fillOval(0, -15, 100, 60);
+       
+        g2d.rotate(Math.toRadians(35));
+        g2d.translate(0, 100);
+       
+        g2d.rotate(Math.toRadians(-35));
+        g.fillOval(-33, 12, 100, 60);
+        
+        g2d.rotate(Math.toRadians(35));
+        g2d.translate(-400, -200);
+        
+        g.setColor(Color.BLACK);
+        g.fillOval(302, 320, 55, 55);
+        g.fillOval(442, 320, 55, 55);
+        
+        g.setColor(faintYellow);
+        g.fillArc(68, 286, 18, 16, 90, 180);
         // GAME DRAWING ENDS HERE
     }
 
@@ -140,7 +168,7 @@ public class FaceAnimation extends JComponent {
         // if a mouse button has been pressed down
         @Override
         public void mousePressed(MouseEvent e){
-            
+            System.out.println(" X: " + e.getX() + " Y: " + e.getY());
         }
         
         // if a mouse button has been released
