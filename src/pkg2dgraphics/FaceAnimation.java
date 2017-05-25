@@ -28,10 +28,15 @@ public class FaceAnimation extends JComponent {
 
 
     // GAME VARIABLES WOULD GO HERE
-    Color lightOrange = new Color(235, 151, 82);
+    Color lightOrange = new Color(252, 179, 96);
     Color faintRed = new Color(240, 125, 125);
     Color brightRed = new Color(232, 44, 44);
     Color faintYellow = new Color (248, 252, 116);
+    
+    double moveMouth = 395;
+    double moveGobble = 389;
+    double closeEye = 320;
+    double add = 1;
     // GAME VARIABLES END HERE   
 
     // drawing of the game happens in here
@@ -50,10 +55,10 @@ public class FaceAnimation extends JComponent {
         // draw circle at(225, 180) near bottome centre that is 350 wide and 350 tall
         g.fillOval(225, 180, 350, 350);
        
-        //set circle color
+        //set oval color
         g.setColor(brightRed);
-        // draw circle at(225, 180) near bottome centre that is 350 wide and 350 tall
-
+        // draw oval near top of circle
+        // create chicken comb on top of head
         g.fillOval(351, 90, 100, 200);
         
         g2d.translate(400, 140);
@@ -78,12 +83,29 @@ public class FaceAnimation extends JComponent {
         g2d.rotate(Math.toRadians(35));
         g2d.translate(-400, -200);
         
+        //create the eyes
+        // set color to black
         g.setColor(Color.BLACK);
-        g.fillOval(302, 320, 55, 55);
-        g.fillOval(442, 320, 55, 55);
+        g.fillOval(302, (int)closeEye, 55, 55);
+        g.fillOval(442, (int)closeEye, 55, 55);
         
+        // creating the pupils
+        // set color to white
+        g.setColor(Color.WHITE);
+        g.fillOval(302, 330, 25, 25);
+        g.fillOval(442, 330, 25, 25);
+        
+        // creating the gobble
+        // set color to red
+        g.setColor(brightRed);
+        g.fillArc(366, (int)moveGobble, 40, 90, 180, 180);
+        g.fillArc(396, (int)moveGobble, 40, 90, 180, 180);
+        
+        //make the beak / mouth
+        // set color to yellow
         g.setColor(faintYellow);
-        g.fillArc(68, 286, 18, 16, 90, 180);
+        g.fillArc(350, (int)moveMouth, 100, 100, 360, 180);
+        g.fillArc(365, 395, 70, 60, 180, 180);
         // GAME DRAWING ENDS HERE
     }
 
