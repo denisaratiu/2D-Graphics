@@ -22,26 +22,21 @@ public class FaceAnimation extends JComponent {
     // Height and Width of our game
     static final int WIDTH = 800;
     static final int HEIGHT = 600;
-
     // sets the framerate and delay for our game
     // you just need to select an approproate framerate
     long desiredFPS = 60;
     long desiredTime = (1000) / desiredFPS;
-
-
     // GAME VARIABLES WOULD GO HERE
     Color lightOrange = new Color(252, 179, 96);
     Color faintRed = new Color(240, 125, 125);
     Color brightRed = new Color(232, 44, 44);
-    Color faintYellow = new Color (248, 252, 116);
-    
+    Color faintYellow = new Color(248, 252, 116);
     double moveMouth = 395;
     double moveGobble = 389;
     double blink = 301;
     double add = 1;
     double addAnother = 1;
     double addOther = 100;
-    
     int blinkDelay = 5;
     long nextBlinkTime = 0;
     // GAME VARIABLES END HERE   
@@ -51,18 +46,18 @@ public class FaceAnimation extends JComponent {
     // NOTE: This is already double buffered!(helps with framerate/speed)
     @Override
     public void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D)g;
+        Graphics2D g2d = (Graphics2D) g;
         // always clear the screen first!
         g.clearRect(0, 0, WIDTH, HEIGHT);
-        
+
         // GAME DRAWING GOES HERE 
-        
+
         // create the chicken head
         //set circle color
         g.setColor(lightOrange);
         // draw circle at(225, 180) near bottome centre that is 350 wide and 350 tall
         g.fillOval(225, 180, 350, 350);
-        
+
         //set oval color
         g.setColor(brightRed);
         // draw oval near top of circle
@@ -72,63 +67,61 @@ public class FaceAnimation extends JComponent {
         g2d.translate(400, 140);
         g2d.rotate(Math.toRadians(-35));
         g.fillOval(0, 4, 100, 70);
-        
+
         g.fillArc(-5, -57, 110, 100, 30, 120);
-        g.fillRect(30, -33, 50, 40); 
-        
+        g.fillRect(30, -33, 50, 40);
+
         g2d.rotate(Math.toRadians(35));
         g2d.translate(0, -50);
-        
+
         g2d.rotate(Math.toRadians(-35));
         g.fillOval(0, -15, 100, 60);
-       
+
         g2d.rotate(Math.toRadians(35));
         g2d.translate(0, 100);
-       
+
         g2d.rotate(Math.toRadians(-35));
         g.fillOval(-33, 12, 100, 60);
-        
+
         g2d.rotate(Math.toRadians(35));
         g2d.translate(-400, -200);
-        
+
         //create the eyes
         // set color to black
         g.setColor(Color.BLACK);
         g.fillOval(302, 320, 55, 55);
         g.fillOval(442, 320, 55, 55);
-        
+
         // creating the pupils
         // set color to white
         g.setColor(Color.WHITE);
         g.fillOval(302, 330, 25, 25);
         g.fillOval(442, 330, 25, 25);
-        
+
         // get eyelids
         // set color to orange (blend in with chicken head)
         g.setColor(lightOrange);
-        g.fillRect(300, (int)blink, 77, 77);
-        g.fillRect(439, (int)blink, 77, 77);
-        
+        g.fillRect(300, (int) blink, 77, 77);
+        g.fillRect(439, (int) blink, 77, 77);
+
         // creating the gobble
         // set color to red
         g.setColor(brightRed);
-        g.fillArc(366, (int)moveGobble, 40, 90, 180, 180);
-        g.fillArc(396, (int)moveGobble, 40, 90, 180, 180);
-        
+        g.fillArc(366, (int) moveGobble, 40, 90, 180, 180);
+        g.fillArc(396, (int) moveGobble, 40, 90, 180, 180);
+
         //make the beak / mouth
         // set color to yellow
         g.setColor(faintYellow);
         g.fillArc(350, 395, 100, 100, 360, 180);
-        g.fillArc(365, (int)moveMouth, 70, 60, 180, 180);
+        g.fillArc(365, (int) moveMouth, 70, 60, 180, 180);
         // GAME DRAWING ENDS HERE
     }
 
-
     // This method is used to do any pre-setup you might need to do
     // This is run before the game loop begins!
-    public void  preSetup(){
-       // Any of your pre setup before the loop starts should go here
-
+    public void preSetup() {
+        // Any of your pre setup before the loop starts should go here
     }
 
     // The main game loop
@@ -152,21 +145,21 @@ public class FaceAnimation extends JComponent {
             // GAME LOGIC STARTS HERE 
             // move the gobble up and down in time with the mouth
             moveGobble = moveGobble + add;
-            if (moveGobble >= 409 || moveGobble <= 389){
+            if (moveGobble >= 409 || moveGobble <= 389) {
                 // move up and down
                 add = add * -1;
             }
             // move the mouth up and down 
             moveMouth = moveMouth + addAnother;
-            if (moveMouth >= 415 || moveMouth <= 395){
+            if (moveMouth >= 415 || moveMouth <= 395) {
                 // move up and down
                 addAnother = addAnother * -1;
             }
             blink = blink + addOther;
-            if (startTime > nextBlinkTime && (blink >= 390 || blink <= 301)){
+            if (startTime > nextBlinkTime && (blink >= 390 || blink <= 301)) {
                 addOther = addOther * -1;
                 nextBlinkTime = startTime + blinkDelay;
-                
+
             }
             // GAME LOGIC ENDS HERE 
             // update the drawing (calls paintComponent)
@@ -208,11 +201,11 @@ public class FaceAnimation extends JComponent {
         frame.pack();
         // shows the window to the user
         frame.setVisible(true);
-        
+
         // add listeners for keyboard and mouse
         frame.addKeyListener(new Keyboard());
         game.addMouseListener(new Mouse());
-        
+
         // starts the game loop
         game.run();
     }
@@ -220,37 +213,34 @@ public class FaceAnimation extends JComponent {
     // Used to implement any of the Mouse Actions
     private static class Mouse extends MouseAdapter {
         // if a mouse button has been pressed down
+
         @Override
-        public void mousePressed(MouseEvent e){
+        public void mousePressed(MouseEvent e) {
             System.out.println(" X: " + e.getX() + " Y: " + e.getY());
         }
-        
+
         // if a mouse button has been released
         @Override
-        public void mouseReleased(MouseEvent e){
-            
+        public void mouseReleased(MouseEvent e) {
         }
-        
+
         // if the mouse has moved positions
         @Override
-        public void mouseMoved(MouseEvent e){
-            
+        public void mouseMoved(MouseEvent e) {
         }
     }
-    
+
     // Used to implements any of the Keyboard Actions
-    private static class Keyboard extends KeyAdapter{
+    private static class Keyboard extends KeyAdapter {
         // if a key has been pressed down
+
         @Override
-        public void keyPressed(KeyEvent e){
-            
+        public void keyPressed(KeyEvent e) {
         }
-        
+
         // if a key has been released
         @Override
-        public void keyReleased(KeyEvent e){
-            
+        public void keyReleased(KeyEvent e) {
         }
     }
 }
-
