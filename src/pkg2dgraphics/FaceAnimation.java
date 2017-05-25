@@ -10,6 +10,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -35,8 +37,13 @@ public class FaceAnimation extends JComponent {
     
     double moveMouth = 395;
     double moveGobble = 389;
-    double closeEye = 320;
+    double blink = 301;
     double add = 1;
+    double addAnother = 1;
+    double addOther = 100;
+    
+    int blinkDelay = 5;
+    long nextBlinkTime = 0;
     // GAME VARIABLES END HERE   
 
     // drawing of the game happens in here
@@ -50,21 +57,22 @@ public class FaceAnimation extends JComponent {
         
         // GAME DRAWING GOES HERE 
         
+        // create the chicken head
         //set circle color
         g.setColor(lightOrange);
         // draw circle at(225, 180) near bottome centre that is 350 wide and 350 tall
         g.fillOval(225, 180, 350, 350);
-       
+        
         //set oval color
         g.setColor(brightRed);
         // draw oval near top of circle
         // create chicken comb on top of head
         g.fillOval(351, 90, 100, 200);
-        
+        // rotate the circles
         g2d.translate(400, 140);
-       
         g2d.rotate(Math.toRadians(-35));
         g.fillOval(0, 4, 100, 70);
+        
         g.fillArc(-5, -57, 110, 100, 30, 120);
         g.fillRect(30, -33, 50, 40); 
         
@@ -86,14 +94,20 @@ public class FaceAnimation extends JComponent {
         //create the eyes
         // set color to black
         g.setColor(Color.BLACK);
-        g.fillOval(302, (int)closeEye, 55, 55);
-        g.fillOval(442, (int)closeEye, 55, 55);
+        g.fillOval(302, 320, 55, 55);
+        g.fillOval(442, 320, 55, 55);
         
         // creating the pupils
         // set color to white
         g.setColor(Color.WHITE);
         g.fillOval(302, 330, 25, 25);
         g.fillOval(442, 330, 25, 25);
+        
+        // get eyelids
+        // set color to orange (blend in with chicken head)
+        g.setColor(lightOrange);
+        g.fillRect(300, (int)blink, 77, 77);
+        g.fillRect(439, (int)blink, 77, 77);
         
         // creating the gobble
         // set color to red
@@ -104,8 +118,8 @@ public class FaceAnimation extends JComponent {
         //make the beak / mouth
         // set color to yellow
         g.setColor(faintYellow);
-        g.fillArc(350, (int)moveMouth, 100, 100, 360, 180);
-        g.fillArc(365, 395, 70, 60, 180, 180);
+        g.fillArc(350, 395, 100, 100, 360, 180);
+        g.fillArc(365, (int)moveMouth, 70, 60, 180, 180);
         // GAME DRAWING ENDS HERE
     }
 
@@ -136,6 +150,24 @@ public class FaceAnimation extends JComponent {
 
             // all your game rules and move is done in here
             // GAME LOGIC STARTS HERE 
+            // move the gobble up and down in time with the mouth
+            moveGobble = moveGobble + add;
+            if (moveGobble >= 409 || moveGobble <= 389){
+                // move up and down
+                add = add * -1;
+            }
+            // move the mouth up and down 
+            moveMouth = moveMouth + addAnother;
+            if (moveMouth >= 415 || moveMouth <= 395){
+                // move up and down
+                addAnother = addAnother * -1;
+            }
+            blink = blink + addOther;
+            if (startTime > nextBlinkTime && (blink >= 390 || blink <= 301)){
+                addOther = addOther * -1;
+                nextBlinkTime = startTime + blinkDelay;
+                
+            }
             // GAME LOGIC ENDS HERE 
             // update the drawing (calls paintComponent)
             repaint();
@@ -221,3 +253,4 @@ public class FaceAnimation extends JComponent {
         }
     }
 }
+
