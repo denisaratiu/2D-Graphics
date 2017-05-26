@@ -36,8 +36,8 @@ public class FaceAnimation extends JComponent {
     double blink = 301;
     double add = 1;
     double addAnother = 1;
-    double addOther = 100;
-    int blinkDelay = 5;
+    double addOther = 2;
+    int blinkDelay = 2000;
     long nextBlinkTime = 0;
     // GAME VARIABLES END HERE   
 
@@ -58,6 +58,25 @@ public class FaceAnimation extends JComponent {
         // draw circle at(225, 180) near bottome centre that is 350 wide and 350 tall
         g.fillOval(225, 180, 350, 350);
 
+        
+        //create the eyes
+        // set color to black
+        g.setColor(Color.BLACK);
+        g.fillOval(302, 320, 55, 55);
+        g.fillOval(442, 320, 55, 55);
+
+        // creating the pupils
+        // set color to white
+        g.setColor(Color.WHITE);
+        g.fillOval(302, 330, 25, 25);
+        g.fillOval(442, 330, 25, 25);
+
+        // get eyelids
+        // set color to orange (blend in with chicken head)
+        g.setColor(lightOrange);
+        g.fillRect(300, (int) blink, 77, 77);
+        g.fillRect(439, (int) blink, 77, 77);
+        
         //set oval color
         g.setColor(brightRed);
         // draw oval near top of circle
@@ -85,24 +104,6 @@ public class FaceAnimation extends JComponent {
 
         g2d.rotate(Math.toRadians(35));
         g2d.translate(-400, -200);
-
-        //create the eyes
-        // set color to black
-        g.setColor(Color.BLACK);
-        g.fillOval(302, 320, 55, 55);
-        g.fillOval(442, 320, 55, 55);
-
-        // creating the pupils
-        // set color to white
-        g.setColor(Color.WHITE);
-        g.fillOval(302, 330, 25, 25);
-        g.fillOval(442, 330, 25, 25);
-
-        // get eyelids
-        // set color to orange (blend in with chicken head)
-        g.setColor(lightOrange);
-        g.fillRect(300, (int) blink, 77, 77);
-        g.fillRect(439, (int) blink, 77, 77);
 
         // creating the gobble
         // set color to red
@@ -155,11 +156,16 @@ public class FaceAnimation extends JComponent {
                 // move up and down
                 addAnother = addAnother * -1;
             }
-            blink = blink + addOther;
-            if (startTime > nextBlinkTime && (blink >= 390 || blink <= 301)) {
+            //make the eyes blink
+            if(blink <= 301 && blink >= 225){
+                blink = blink + addOther;
+            }
+            if (startTime > nextBlinkTime && (blink >= 225 || blink <= 301)) {
                 addOther = addOther * -1;
+                // delay blink time
                 nextBlinkTime = startTime + blinkDelay;
-
+                 blink = blink + addOther;
+                System.out.println("tick");
             }
             // GAME LOGIC ENDS HERE 
             // update the drawing (calls paintComponent)
